@@ -38,32 +38,23 @@ void searchBitacoras() {
     Bitacoras bitacoraInstance;
     bitacoraInstance.loadBitacoras(bitacoras);
 
+    std::vector<Bitacoras> bitacorasOrdenadas = bitacoras;
+    bitacoraInstance.quickSort(bitacorasOrdenadas, 0, bitacorasOrdenadas.size() - 1);
+
     cout << "Dame la fecha inicial (mes y día) para buscar bitacoras (por ejemplo, 'Jun 1'): ";
     string month, dayStr;
     cin >> month >> dayStr;
 
-    
-    cout << "Dame la fecha final (mes y dia) para buscar bitacoras (por ejemplo, 'Jun 30'): ";
+    cout << "Dame la fecha final (mes y día) para buscar bitacoras (por ejemplo, 'Jun 30'): ";
     string month2, dayStr2;
     cin >> month2 >> dayStr2;
 
-    unsigned int dayInt = stoi(dayStr);
-    unsigned int dayInt2 = stoi(dayStr2);
+    unsigned int startDay = stoi(dayStr);
+    unsigned int endDay = stoi(dayStr2);
 
-    int index1 = bitacoraInstance.sequentialSearchMonth(bitacoras, month);
-    int index2 = bitacoraInstance.sequentialSearchDay(bitacoras, dayInt);
-    int index3 = bitacoraInstance.sequentialSearchMonth(bitacoras, month2);
-    int index4 = bitacoraInstance.sequentialSearchDay(bitacoras, dayInt2);
-
-    if (index1 != -1 && index2 != -1 && index3 != -1 && index4 != -1) {
-        cout << "Bitacoras encontradas: " << endl;
-        for (int i = index1; i <= index3; i++) {
-            cout << bitacoras[i].getMonth() << " " << bitacoras[i].getDay() << " " << bitacoras[i].getHour() << " " << bitacoras[i].getIp() << " " << bitacoras[i].getMessage() << endl;
-        }
-    } else {
-        cout << "No se encontraron bitacoras para las fechas proporcionadas." << endl;
-    }
-}   
+    bitacoraInstance.searchBitacorasInRange(bitacorasOrdenadas, month, startDay, month2, endDay);
+}
+  
 
 int main() {
     int n;

@@ -30,8 +30,8 @@ class Bitacoras {
         void saveSortedBitacorasToFile(const std::vector<Bitacoras> &bitacoras, const std::string &filename);
         void quickSort(std::vector<Bitacoras>& bitacoras, int low, int high);
         int partition(std::vector<Bitacoras>& bitacoras, int lo, int high);
-        int sequentialSearchMonth(const std::vector<Bitacoras> &bitacoras, const std::string &month);
-        int sequentialSearchDay(const std::vector<Bitacoras> &bitacoras, unsigned int day);
+        void searchBitacorasInRange(const std::vector<Bitacoras>& bitacoras, const std::string& startMonth, unsigned int startDay, const std::string& endMonth, unsigned int endDay);
+
 };
 
 #endif // BITACORAS_H

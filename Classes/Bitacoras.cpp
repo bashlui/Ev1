@@ -152,20 +152,33 @@ void Bitacoras::saveSortedBitacorasToFile(const std::vector<Bitacoras> &bitacora
     std::cout << "Bitácoras ordenadas guardadas en: " << filename << std::endl;
 }
 
-int Bitacoras::sequentialSearchMonth(const std::vector<Bitacoras> &bitacoras, const std::string &month) {
-    for (int i = 0; i < bitacoras.size(); i++) {
-        if (bitacoras[i].getMonth() == month) {
-            return i;
-        }
-    }
-    return -1;
-}
+void Bitacoras::searchBitacorasInRange(const std::vector<Bitacoras>& bitacoras, const std::string& startMonth, unsigned int startDay, const std::string& endMonth, unsigned int endDay) {
+    int startMonthNum = monthToNumber(startMonth);
+    int endMonthNum = monthToNumber(endMonth);
 
-int Bitacoras::sequentialSearchDay(const std::vector<Bitacoras> &bitacoras, unsigned int day) {
-    for (int i = 0; i < bitacoras.size(); i++) {
-        if (bitacoras[i].getDay() == day) {
-            return i;
+    if (startMonthNum == -1 || endMonthNum == -1) {
+        std::cout << "Mes inválido proporcionado." << std::endl;
+        return;
+    }
+
+    std::cout << "Bitácoras encontradas en el rango especificado:" << std::endl;
+    bool found = false;
+
+    for (const auto& bitacora : bitacoras) {
+        int currentMonthNum = monthToNumber(bitacora.getMonth());
+        unsigned int currentDay = bitacora.getDay();
+
+        // Verificar si el registro está dentro del rango
+        if ((currentMonthNum > startMonthNum || (currentMonthNum == startMonthNum && currentDay >= startDay)) &&
+            (currentMonthNum < endMonthNum || (currentMonthNum == endMonthNum && currentDay <= endDay))) {
+            std::cout << bitacora.getMonth() << " " << bitacora.getDay() << " " 
+                      << bitacora.getHour() << " " << bitacora.getIp() << " " 
+                      << bitacora.getMessage() << std::endl;
+            found = true;
         }
     }
-    return -1;
+
+    if (!found) {
+        std::cout << "No se encontraron bitácoras dentro del rango especificado." << std::endl;
+    }
 }
