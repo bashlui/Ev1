@@ -88,11 +88,12 @@ void Bitacoras::loadBitacoras(vector<Bitacoras> &bitacoras) {
     file.close();
 }
 
-void Bitacoras::showBitacorasList(vector<Bitacoras> &bitacoras) {
+void Bitacoras::printBitacorasList(vector<Bitacoras> &bitacoras) {
     for (int i = 0; i <= bitacoras.size(); i++) {
         cout << bitacoras[i].getMonth() << " " << bitacoras[i].getDay() << " " << bitacoras[i].getHour() << " " << bitacoras[i].getIp() << " " << bitacoras[i].getMessage() << endl;
     }
 }
+
 
 int Bitacoras::monthToNumber(const std::string &month) {
     if (month == "Jun") return 6;
@@ -151,32 +152,20 @@ void Bitacoras::saveSortedBitacorasToFile(const std::vector<Bitacoras> &bitacora
     std::cout << "Bitácoras ordenadas guardadas en: " << filename << std::endl;
 }
 
-int Bitacoras::binarySearch(const std::vector<Bitacoras> &bitacoras, const std::string &month, unsigned int day) {
-    int left = 0;
-    int right = bitacoras.size() - 1;
-    int targetMonth = monthToNumber(month);
-
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-
-        int midMonth = monthToNumber(bitacoras[mid].getMonth());
-        unsigned int midDay = bitacoras[mid].getDay();
-
-        // Primero comparamos por mes
-        if (midMonth < targetMonth) {
-            left = mid + 1;
-        } else if (midMonth > targetMonth) {
-            right = mid - 1;
-        } else {
-            // Si los meses son iguales, comparamos por día
-            if (midDay == day) {
-                return mid;  // Encontramos el registro
-            } else if (midDay < day) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+int Bitacoras::sequentialSearchMonth(const std::vector<Bitacoras> &bitacoras, const std::string &month) {
+    for (int i = 0; i < bitacoras.size(); i++) {
+        if (bitacoras[i].getMonth() == month) {
+            return i;
         }
     }
-    return -1; // Si no se encuentra
+    return -1;
+}
+
+int Bitacoras::sequentialSearchDay(const std::vector<Bitacoras> &bitacoras, unsigned int day) {
+    for (int i = 0; i < bitacoras.size(); i++) {
+        if (bitacoras[i].getDay() == day) {
+            return i;
+        }
+    }
+    return -1;
 }

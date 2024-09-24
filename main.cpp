@@ -11,7 +11,7 @@ vector<Bitacoras> bitacoras;
 void showBitacorasList() {
     Bitacoras bitacoraInstance;
     bitacoraInstance.loadBitacoras(bitacoras);
-    bitacoraInstance.showBitacorasList(bitacoras);
+    bitacoraInstance.printBitacorasList(bitacoras);
 }
 void sortAndSaveBitacoras() {
     Bitacoras bitacoraInstance;
@@ -38,21 +38,33 @@ void searchBitacoras() {
     Bitacoras bitacoraInstance;
     bitacoraInstance.loadBitacoras(bitacoras);
 
-    string month;
-    unsigned int day;
-    cout << "Ingresa el mes (Jun, Jul, Aug, Sep, Oct): ";
-    cin >> month;
-    cout << "Ingresa el día: ";
-    cin >> day;
+    cout << "Dame la fecha inicial (mes y día) para buscar bitacoras (por ejemplo, 'Jun 1'): ";
+    string month, dayStr;
+    cin >> month >> dayStr;
 
-    int index = bitacoraInstance.binarySearch(bitacoras, month, day);
-    if (index != -1) {
-        cout << "Bitácora encontrada: " << bitacoras[index].getMonth() << " " << bitacoras[index].getDay() << " " << bitacoras[index].getHour() << " " << bitacoras[index].getIp() << " " << bitacoras[index].getMessage() << endl;
+    
+    cout << "Dame la fecha final (mes y dia) para buscar bitacoras (por ejemplo, 'Jun 30'): ";
+    string month2, dayStr2;
+    cin >> month2 >> dayStr2;
+
+    unsigned int dayInt = stoi(dayStr);
+    unsigned int dayInt2 = stoi(dayStr2);
+
+    int index1 = bitacoraInstance.sequentialSearchMonth(bitacoras, month);
+    int index2 = bitacoraInstance.sequentialSearchDay(bitacoras, dayInt);
+    int index3 = bitacoraInstance.sequentialSearchMonth(bitacoras, month2);
+    int index4 = bitacoraInstance.sequentialSearchDay(bitacoras, dayInt2);
+
+    if (index1 != -1 && index2 != -1 && index3 != -1 && index4 != -1) {
+        cout << "Bitacoras encontradas: " << endl;
+        for (int i = index1; i <= index3; i++) {
+            cout << bitacoras[i].getMonth() << " " << bitacoras[i].getDay() << " " << bitacoras[i].getHour() << " " << bitacoras[i].getIp() << " " << bitacoras[i].getMessage() << endl;
+        }
     } else {
-        cout << "Bitácora no encontrada" << endl;
+        cout << "No se encontraron bitacoras para las fechas proporcionadas." << endl;
     }
-}
-/*
+}   
+
 int main() {
     int n;
     Bitacoras bitacoraInstance;
@@ -94,4 +106,3 @@ int main() {
     return 0;
 }
 
-*/

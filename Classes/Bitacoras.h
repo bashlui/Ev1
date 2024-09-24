@@ -26,12 +26,12 @@ class Bitacoras {
         int monthToNumber(const std::string &month);   
         static std::string trim(const std::string &str);
         void loadBitacoras(std::vector<Bitacoras> &bitacoras);
-        void showBitacorasList(std::vector<Bitacoras> &bitacoras);
+        void printBitacorasList(std::vector<Bitacoras> &bitacoras);
         void saveSortedBitacorasToFile(const std::vector<Bitacoras> &bitacoras, const std::string &filename);
         void quickSort(std::vector<Bitacoras>& bitacoras, int low, int high);
         int partition(std::vector<Bitacoras>& bitacoras, int lo, int high);
-        int binarySearch(const std::vector<Bitacoras> &bitacoras, const std::string &month, unsigned int day);
-        
+        int sequentialSearchMonth(const std::vector<Bitacoras> &bitacoras, const std::string &month);
+        int sequentialSearchDay(const std::vector<Bitacoras> &bitacoras, unsigned int day);
 };
 
 #endif // BITACORAS_H
